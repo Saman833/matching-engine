@@ -1,11 +1,12 @@
-package org.example;
+package edu.harbourspace.university.matchingengine;
 
-public class Order {
-    private String id;
-    private double price;
-    private long quantity;
-    private String type;
-    private String listingID;
+public abstract class Order {
+    private final String id;
+    private final OrderType orderType;
+
+    public OrderType getOrderType() {
+        return orderType;
+    }
 
     public void setId(String id) {
         this.id = id;

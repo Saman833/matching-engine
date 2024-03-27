@@ -1,4 +1,4 @@
-package org.example;
+package edu.harbourspace.university.matchingengine;
 import java.util.*;
 public class InputParser {
     long maxPos;
@@ -42,26 +42,28 @@ public class InputParser {
         }
         return true;
     }
-    boolean parserInput(String order){
+    Order parserInput(String order) throws InvalidOrderException {
         Map<String,ListingID> ids= new HashMap<>();
         if (order.equals("Finish")){
             return true;
         }
         String[] ss=order.split(" ");
         ArrayList<String> s=new ArrayList<>();
+        Originator originator = Originator.valueOf(s.get(0));
         for (int i=0; i<ss.length; i++){
             if(!ss[i].equals(" ")){
                 s.add(ss[i]);
             }
         }
         if (s.size()==6 && isNumeric(s.get(3)) && isNumeric(s.get(4)) ){
-            if (s.get(0).equals("DF")){
+            if (originator == Originator.DF){
                 if (s.get(2).equals("BUY")){
                     maxPosition.buyOrder(makeBuyOrder(s));
                 }else if(s.get(2).equals("SELL")){
                     maxPosition.sellOrder(makeSellOrder(s));
                 }else {
                     invalid();
+                    throw new InvalidOrderException("Message");
                     return false;
                 }
             }else if (s.get(0).equals("VE")){

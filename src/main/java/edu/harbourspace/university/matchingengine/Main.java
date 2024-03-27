@@ -1,24 +1,20 @@
-package org.example;
+package edu.harbourspace.university.matchingengine;
 
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
-import java.util.*;
-import java.util.stream.Stream;
+
 public class Main {
 
     public static void main(String[] args){
-        Set <String> result= new HashSet<>();
-        Scanner inp=new Scanner(System.in);
-        long maxPosition= inp.nextLong();
-        System.out.println(maxPosition);
-
+        InputReader inputReader = new InputReader(new Scanner(System.in));
+        long maxPosition = inputReader.readMaxPosition();
         InputParser inputParser=new InputParser(maxPosition);
-        InputReader inputReader=new InputReader(inp);
-        while (true){
-           if (inputParser.parserInput(inputReader.readInput())){
-               break;
-           }
-        }
+        OrderProcessor orderProcessor = new OrderProcessor();
+        TradePrinter tradePrinter = new TradePrinter();
+        MatchingEngine matchingEngine = new MatchingEngine(maxPosition,
+                orderProcessor, tradePrinter, inputParser, inputReader);
+        matchingEngine.run();
     }
 
 }
